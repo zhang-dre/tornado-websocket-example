@@ -5,7 +5,13 @@ cl = []
 
 class IndexHandler(web.RequestHandler):
     def get(self):
-        self.render("index.html")
+        import socket
+        import urlparse
+        hostname = urlparse.urlparse("%s://%s"
+                % (self.request.protocol, self.request.host)).hostname
+        ip_address = socket.gethostbyname(hostname)
+
+        self.render("index.html", ip_address=ip_address)
 
 class SocketHandler(websocket.WebSocketHandler):
     def check_origin(self, origin):
@@ -41,7 +47,7 @@ app = web.Application([
     (r'/api', ApiHandler),
     (r'/(favicon.ico)', web.StaticFileHandler, {'path': '../'}),
     (r'/(rest_api_example.png)', web.StaticFileHandler, {'path': './'}),
-])
+    ])
 
 if __name__ == '__main__':
     app.listen(8888)

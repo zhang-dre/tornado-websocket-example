@@ -83,8 +83,12 @@
     </ul>
 
     <hr>
-    <h3>Server Info</h3>
-    <div id="server_info"></div>
+    <h3>Server IP</h3>
+    <div id="server_ip">{{ip_address}}</div>
+
+    <hr>
+    <h3>Client Info</h3>
+    <div id="client_info"></div>
   </div>
   <script>
     var host = window.location.host;
@@ -92,10 +96,10 @@
     var $message = $('#message');
 
     // server info
-    var $server_info = $('#server_info');
+    var $client_info = $('#client_info');
     $.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
       console.log(JSON.stringify(data, null, 2));
-      $server_info.text(JSON.stringify(data, null, 2));
+      $client_info.text(JSON.stringify(data, null, 2));
     });
 
     ws.onopen = function(){
