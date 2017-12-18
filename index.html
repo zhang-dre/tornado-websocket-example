@@ -81,12 +81,22 @@
       <li>value 201 - 500 : change to yellow</li>
       <li>value 501 - : change to red</li>
     </ul>
-    <img src="./rest_api_example.png"/>
+
+    <hr>
+    <h3>Server Info</h3>
+    <div id="server_info"></div>
   </div>
   <script>
     var host = window.location.host;
     var ws = new WebSocket('ws://'+host+'/ws');
     var $message = $('#message');
+
+    // server info
+    var $server_info = $('#server_info');
+    $.getJSON('http://gd.geobytes.com/GetCityDetails?callback=?', function(data) {
+      console.log(JSON.stringify(data, null, 2));
+      $server_info.text(JSON.stringify(data, null, 2));
+    });
 
     ws.onopen = function(){
       $message.attr("class", 'label label-success');
